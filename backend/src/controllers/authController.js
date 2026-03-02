@@ -66,6 +66,7 @@ const login = async (req, res) => {
     );
 
     res.status(200).json({
+      success: true,
       user: {
         id: user._id,
         name: user.name,
@@ -74,8 +75,11 @@ const login = async (req, res) => {
       },
       token,
     });
+
+    // console.log("Test login: Everything is fine in backend")
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
+    // console.log(error);
   }
 };
 

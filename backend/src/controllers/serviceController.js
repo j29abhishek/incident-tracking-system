@@ -56,6 +56,33 @@ const getServices = async (req, res) => {
   }
 };
 
+const getServiceById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    const service = await Service.findById(id);
+
+    if (!service) {
+      return res.status(404).json({ message: "Service not found" });
+    }
+
+    res.status(200).json({
+      service,
+    });
+  } catch (error) {
+    console.error("Error fetching service:", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong while fetching service",
+      error: error.message,
+    });
+  }
+};
+
 const updateService = async (req, res) => {
   const serviceId = req.params.id;
   const { name, description, currentStatus } = req.body;
@@ -105,4 +132,10 @@ const deleteService = async (req, res) => {
     });
   }
 };
-module.exports = { createService, getServices, updateService, deleteService };
+module.exports = {
+  createService,
+  getServices,
+  updateService,
+  deleteService,
+  getServiceById,
+};

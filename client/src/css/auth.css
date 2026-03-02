@@ -1,0 +1,95 @@
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f9fafb;
+}
+
+.auth-card {
+  width: 500px;
+  background: #ffffff;
+  padding: 36px 32px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.auth-card .auth-logo{
+  height: 42px;
+  margin: 0 auto 12px;
+  display: block;
+}
+
+.auth-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #111827;
+}
+
+/* Scoped input group */
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap:5px;
+  justify-content: center;
+  border-bottom: 1px solid #d1d5db;
+  margin-bottom: 22px;
+}
+
+.auth-input-icon {
+  font-size: 14px;
+  margin-right: 10px;
+  color: #6b7280;
+}
+
+.auth-input-group input {
+  border: none;
+  outline: none;
+  /* width: 100%; */
+  padding: 8px 0;
+  font-size: 14px;
+  color: #111827;
+}
+
+.auth-input-group input::placeholder {
+  color: #9ca3af;
+}
+
+/* Terms */
+.auth-terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12.5px;
+  color: #4b5563;
+  margin: 20px 0 26px;
+}
+
+.auth-terms a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+/* Button */
+.auth-btn {
+  width: 100%;
+  padding: 12px;
+  background: #60a5fa;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  margin:1rem auto;
+}
+
+p.auth-message {
+  text-align: center;
+}
+
+.auth-btn:hover {
+  background: #3b82f6;
+}

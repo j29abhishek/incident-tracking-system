@@ -1,0 +1,212 @@
+/* ======================= */
+/* Service Management Page */
+/* ======================= */
+
+.service-management-page {
+  padding: 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9fafb;
+  min-height: 100vh;
+}
+
+/* Header */
+.service-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.service-header h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Table Wrapper */
+.service-table-wrapper {
+  margin-top: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid #eef0f3;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Table Styling */
+.service-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  min-width: 600px;
+}
+
+.service-table thead th {
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 500;
+  color: #6b7280;
+  background-color: #fafafa;
+  border-bottom: 1px solid #eef0f3;
+}
+
+.service-table tbody td {
+  padding: 12px 14px;
+  color: #374151;
+  border-bottom: 1px solid #f0f2f5;
+  vertical-align: middle;
+}
+
+.service-table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Action Buttons */
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon-btn:hover {
+  transform: scale(1.1);
+}
+
+.edit-btn {
+  color: #10b981; /* green */
+}
+
+.edit-btn:hover {
+  background-color: rgba(16, 185, 129, 0.1);
+}
+
+.delete-btn {
+  color: #ef4444; /* red */
+  margin-left: 8px;
+}
+
+.delete-btn:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+/* Loading / Empty State */
+.service-management-page p {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 20px;
+}
+
+
+/* service form  */
+
+/* Page wrapper */
+.service-form-page {
+  /* min-height: 100vh; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background: #f9fafb; */
+  padding: 0px 20px;
+}
+
+/* Card */
+.service-form-card {
+  width: 80%;
+  margin:auto;
+  background: #ffffff;
+  padding: 36px 32px;
+  /* border-radius: 10px; */
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); */
+}
+
+/* Title */
+.service-form-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 28px;
+  color: #111827;
+}
+
+/* Input group */
+.service-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 22px;
+  border-bottom: 1px solid #d1d5db;
+  padding-bottom: 4px;
+}
+
+.service-input-group label {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.service-input-group input,
+.service-input-group textarea,
+.service-input-group select {
+  border: none;
+  outline: none;
+  padding: 8px 0;
+  font-size: 14px;
+  color: #111827;
+  background: transparent;
+}
+
+.service-input-group input::placeholder,
+.service-input-group textarea::placeholder {
+  color: #9ca3af;
+}
+
+/* Button */
+.service-form-btn {
+  width: 100%;
+  padding: 12px;
+  background: #60a5fa;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.service-form-btn:hover {
+  background: #3b82f6;
+}
+
+/* Message */
+.service-form-message {
+  text-align: center;
+  margin-top: 1rem;
+  color: #ef4444; /* red for error */
+  font-weight: 500;
+}
+/* Responsive Table */
+@media (max-width: 768px) {
+  .service-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .service-header h2 {
+    margin-bottom: 12px;
+  }
+
+  .service-table {
+    font-size: 12px;
+    min-width: 100%;
+  }
+
+  .icon-btn {
+    font-size: 14px;
+    padding: 4px 6px;
+  }
+}

@@ -1,0 +1,230 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0rem 8rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* bottom only, thin */
+    /* height: 80px; */
+}
+
+/* .navbar-brand{
+    
+} */
+
+.navbar-brand img {
+    height: 60px;
+}
+
+.navbar .login .login-link {
+    padding: 8px 36px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid green;
+    color: green;
+    background-color: transparent;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.homepage-main {
+    display: flex;
+    padding: 0rem 8rem;
+    margin: 3rem auto;
+    gap: 70px;
+}
+
+.service-introduction {
+    width: 40%;
+}
+
+.service-introduction h2 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #0f172a;
+    /* slate-900 */
+    margin-bottom: 20px;
+}
+
+.service-introduction h2 span {
+    background: linear-gradient(90deg, #2563eb, #4f46e5, #9333ea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.service-introduction p {
+    font-size: 16.5px;
+    line-height: 1.7;
+    color: #475569;
+    /* slate-600 */
+    margin-bottom: 32px;
+    max-width: 520px;
+}
+
+
+.create-account button {
+    background: #37ce69;
+    color: #ffffff;
+    border: none;
+    padding: 10px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.create-account button:hover {
+    background: #07c707;
+    transform: translateY(-1px);
+}
+
+.features-grid {
+    display: grid;
+    width: 60%;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, auto);
+    gap: 24px;
+}
+
+.feature-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+}
+
+.feature-icon {
+    font-size: 26px;
+    margin-bottom: 16px;
+     background: linear-gradient(90deg, #2563eb, #4f46e5, #9333ea);
+     color: #ffffff;
+     width:48px;
+     height: 48px;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     border-radius: 50%;
+}
+
+.feature-card h3 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.feature-card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #475569;
+}
+
+.features-section {
+  background-color: #f8fafc;
+  padding: 60px 10%;
+}
+
+.features-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 32px;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  max-width: 900px;
+}
+
+.features-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #334155;
+  margin-bottom: 20px;
+}
+
+.feature-sec-icon {
+  color: #2563eb;
+  font-weight: 700;
+  font-size: 18px;
+  margin-top: 2px;
+}
+
+.app-footer {
+  background-color: #111827;
+  color: #ffffff;
+  padding: 64px 6% 24px;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 32px;
+}
+
+.footer-section h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.footer-section h4 {
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.footer-section p {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #d1d5db;
+  max-width: 420px;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  font-size: 14px;
+  color: #9ca3af;
+  margin-bottom: 10px;
+}
+
+/* Disabled links — recruiter-safe */
+.footer-section ul li.disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Bottom bar */
+.footer-bottom {
+  border-top: 1px solid #1f2937;
+  padding-top: 18px;
+  font-size: 13.5px;
+  color: #9ca3af;
+  text-align: center;
+}
+
+@media (max-width: 900px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .app-footer {
+    padding: 48px 6% 20px;
+  }
+}
