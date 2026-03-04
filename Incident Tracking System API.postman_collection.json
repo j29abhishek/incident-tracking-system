@@ -1,0 +1,623 @@
+{
+  "info": {
+    "_postman_id": "2eb22e62-f949-4d50-bd49-9d3eb7382a3f",
+    "name": "Incident Tracking System API",
+    "description": "This Postman Collection contains all the API endpoints for the **Incident Management System**, which is designed to track and manage incidents, services, and users within an organization. The system supports role-based access for **Admin**, **Engineer**, and **User** roles and provides features such as incident reporting, assignment, updates, history tracking, and priority escalation.\n\n#### **Features Covered:**\n\n- **User Authentication & Authorization**\n    \n    - Register, login, and JWT-based authentication.\n        \n    - Role-based access control (Admin / Engineer / User).\n        \n- **Incident Management**\n    \n    - Report new incidents.\n        \n    - Assign incidents to engineers (Admin only).\n        \n    - Update incident status (Engineer).\n        \n    - View incident history.\n        \n    - Fetch all incidents or user-specific incidents.\n        \n- **Services Management**\n    \n    - List of services for which incidents can be reported.\n        \n    - Fetch service details.\n        \n- **Priority & Escalation**\n    \n    - Automatically calculate priority based on impact and urgency.\n        \n    - Escalate incidents using cron-based automation (backend logic).\n        \n- **Real time update (Optional)**\n    \n    - System send real time incident reported by user",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "52905966",
+    "_collection_link": "https://go.postman.co/collection/52905966-2eb22e62-f949-4d50-bd49-9d3eb7382a3f?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Authentication & user",
+      "item": [
+        {
+          "name": "signup request",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"Abhishek Jaiswal\",\r\n    \"email\":\"abhi2002j@gmail.com\",\r\n    \"password\":\"Abhi@2001\",\r\n    \"confirmPassword\":\"Abhi@2001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/signup",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login request",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"abhi2002j@gmail.com\",\r\n    \"password\":\"Abhi@2001\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch Engineers",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/auth/engineers",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "engineers"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Fetch logged in user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/auth/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "incidents and Incident History",
+      "item": [
+        {
+          "name": "report request",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTgyOGM5OWFhZDdlNDZjMGM3YmViMCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzcyNjI4MzYwLCJleHAiOjE3NzMyMzMxNjB9.PhdT4hAotalHZ14zcqCGtES3_UoCLXnD8_koixDfInE",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Cloud service problem\",\r\n    \"description\":\"Server down issue\",\r\n    \"service\":\"69a5f44283555c3a699bfe2a\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/report",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "report"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all incident reported",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjM0MTU3NywiZXhwIjoxNzcyOTQ2Mzc3fQ.TZVxsDMCcc2bvZQASqeE4Aa6e2WGBv5VWBz2u6Lon-g",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/incidents",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all incidents by particular user",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjM0MTU3NywiZXhwIjoxNzcyOTQ2Mzc3fQ.TZVxsDMCcc2bvZQASqeE4Aa6e2WGBv5VWBz2u6Lon-g",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "user"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get incident by its ids -tracking updates",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjM0MTU3NywiZXhwIjoxNzcyOTQ2Mzc3fQ.TZVxsDMCcc2bvZQASqeE4Aa6e2WGBv5VWBz2u6Lon-g",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/69a82b3d9aad7e46c0c7beb3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "69a82b3d9aad7e46c0c7beb3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "assigned incident for resolving",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMDA4MSwiZXhwIjoxNzczMjM0ODgxfQ.kjhmeIOi5rFaa0QlvmBo7RhUfs6aubXRLeeXpMSJEzQ",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"assignedTo\":\"69a6bceed46908a48ea8b660\",\r\n    \"impact\":\"medium\",\r\n    \"urgency\":\"low\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/assign/69a82b3d9aad7e46c0c7beb3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "assign",
+                "69a82b3d9aad7e46c0c7beb3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Engineer update status after resolving",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTZiY2VlZDQ2OTA4YTQ4ZWE4YjY2MCIsInJvbGUiOiJlbmdpbmVlciIsImlhdCI6MTc3MjYzMDc0OCwiZXhwIjoxNzczMjM1NTQ4fQ.mOFiZXoBqY7MDQYIDZuM6ogeS9VsjFUqvUmJZr0hKDA",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"status\":\"resolved\",\r\n    \"resolutionSummary\":\"Resolved problem\",\r\n    \"comment\":\"your problem has been resolved\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/engineer-action/69a82b3d9aad7e46c0c7beb3",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "engineer-action",
+                "69a82b3d9aad7e46c0c7beb3"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all Assigned Issue by Admin to an engineer",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTZiY2VlZDQ2OTA4YTQ4ZWE4YjY2MCIsInJvbGUiOiJlbmdpbmVlciIsImlhdCI6MTc3MjYzMDc0OCwiZXhwIjoxNzczMjM1NTQ4fQ.mOFiZXoBqY7MDQYIDZuM6ogeS9VsjFUqvUmJZr0hKDA",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/assignedto",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "assignedto"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "History of an incident with timeline and status",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTZiY2VlZDQ2OTA4YTQ4ZWE4YjY2MCIsInJvbGUiOiJlbmdpbmVlciIsImlhdCI6MTc3MjYzMDc0OCwiZXhwIjoxNzczMjM1NTQ4fQ.mOFiZXoBqY7MDQYIDZuM6ogeS9VsjFUqvUmJZr0hKDA",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/incidents/history/69a7d9d801eb23eb576cbb5a",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "incidents",
+                "history",
+                "69a7d9d801eb23eb576cbb5a"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "services",
+      "item": [
+        {
+          "name": "List of all services",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTZiY2VlZDQ2OTA4YTQ4ZWE4YjY2MCIsInJvbGUiOiJlbmdpbmVlciIsImlhdCI6MTc3MjYzMDc0OCwiZXhwIjoxNzczMjM1NTQ4fQ.mOFiZXoBqY7MDQYIDZuM6ogeS9VsjFUqvUmJZr0hKDA",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "request to create service",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"payment gateway\",\r\n    \"description\":\"Payment makes easy\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/services",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "services"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "service update request",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"currentStatus\":\"Down\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:4000/api/services/69a8374b9aad7e46c0c7bedb",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "services",
+                "69a8374b9aad7e46c0c7bedb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete a service",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/services/69a8374b9aad7e46c0c7bedb",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "services",
+                "69a8374b9aad7e46c0c7bedb"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get a service by its Id",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/services/69a5f3fd83555c3a699bfe27",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "services",
+                "69a5f3fd83555c3a699bfe27"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "dashboard",
+      "item": [
+        {
+          "name": "Fetch dashboard statistics",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5YTJkY2UyMDRhM2U0NWRlMzE3OGI2MiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc3MjYzMTcyNywiZXhwIjoxNzczMjM2NTI3fQ.hqL5V4YW0e90yFdhjSBxho7tTQLNSA59aBPIfyl97BM",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:4000/api/dashboard/stats",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "4000",
+              "path": [
+                "api",
+                "dashboard",
+                "stats"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
