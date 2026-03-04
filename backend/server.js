@@ -28,7 +28,7 @@ require("./src/cron-job/escalateIncident");
 // ---------- SOCKET.IO SETUP ----------
 const { Server } = require("socket.io");
 const io = new Server(http, {
-  cors: { origin: "http://localhost:5173" }, 
+  cors: { origin: "https://incident-tracking.netlify.app/" }, 
 });
 
 //accessible in controllers

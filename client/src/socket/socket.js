@@ -1,7 +1,7 @@
 // src/socket.js
 import { io } from "socket.io-client";
 
-const SOCKET_URL = "http://localhost:4000";
+const SOCKET_URL = "https://incident-tracking-system.onrender.com";
 
 // Create a single socket instance
 export const socket = io(SOCKET_URL, {
