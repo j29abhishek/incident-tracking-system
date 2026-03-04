@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { socket } from "../../socket/socket";
 import IncidentTable from "../shared/IncidentTable";
 import api from "../../api/axiosInstance";
+
+// const socket = io("http://localhost:4000");
 
 const AdminIncidents = () => {
   const [incidents, setIncidents] = useState([]);
@@ -35,6 +38,14 @@ const AdminIncidents = () => {
     fetchIncidents();
   }, [page]);
 
+  useEffect(() => {
+    socket.on("new-incident", (incident) => {
+      setIncidents((prev) => [incident, ...prev]);
+    });
+
+    return () => socket.off("new-incident");
+  }, []);
+
   if (loading) {
     return <p className="loading-state">Loading incidents...</p>;
   }
@@ -50,7 +61,8 @@ const AdminIncidents = () => {
         <p>Overview of all reported incidents</p>
       </div>
 
-      <IncidentTable incidents={incidents} />
+      {/* <IncidentTable incidents={incidents}  /> */}
+      <IncidentTable incidents={incidents} showAdminColumns />
 
       <div className="pagination">
         <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>

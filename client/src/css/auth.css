@@ -76,7 +76,7 @@
 .auth-btn {
   width: 100%;
   padding: 12px;
-  background: #60a5fa;
+  background: #9644e8;
   border: none;
   border-radius: 6px;
   font-size: 14px;
@@ -92,4 +92,52 @@ p.auth-message {
 
 .auth-btn:hover {
   background: #3b82f6;
+}
+
+
+.unauth-page {
+  height: 100vh;
+  background-color: #e5e5e5; /* soft gray */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.unauth-card {
+  background: #ffffff;
+  width: 420px;
+  padding: 2.5rem;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.unauth-card h1 {
+  margin-bottom: 0.5rem;
+  font-size: 24px;
+  color: #222;
+}
+
+.unauth-subtitle {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 1.5rem;
+}
+
+.unauth-instructions {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.unauth-home-link {
+  text-decoration: none;
+  font-size: 14px;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.unauth-home-link:hover {
+  text-decoration: underline;
 }

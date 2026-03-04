@@ -9,6 +9,7 @@ import {
   faTriangleExclamation,
   faChartBar,
   faRightFromBracket,
+  faClockRotateLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import "../css/dashboard.css";
 
@@ -19,6 +20,12 @@ const EngineerDashboard = () => {
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/");
+  };
+
+    const handleNavClick = () => {
+    if (window.innerWidth <= 900) {
+      setOpenMenu(false);
+    }
   };
 
   return (
@@ -35,7 +42,7 @@ const EngineerDashboard = () => {
           Incident Engineer
         </div>
 
-        <div className="dash-user">Engineer</div>
+        {/* <div className="dash-user">Engineer</div> */}
       </header>
 
       <div className="dash-container">
@@ -43,24 +50,24 @@ const EngineerDashboard = () => {
         <aside className={`dash-sidebar ${openMenu ? "open" : ""}`}>
           <div className="dash-group-title">Dashboard</div>
 
-          <NavLink to="" end className="dash-menu-item">
+          {/* <NavLink to="" end className="dash-menu-item" onClick={handleNavClick}>
             <FontAwesomeIcon icon={faChartBar} className="menu-icon" />
             <span>Overview</span>
-          </NavLink>
+          </NavLink> */}
 
-          <div className="dash-group-title">Management</div>
+          {/* <div className="dash-group-title">Management</div> */}
 
-          <NavLink to="users" className="dash-menu-item">
-            <FontAwesomeIcon icon={faUsers} className="menu-icon" />
+          <NavLink to="" end className="dash-menu-item" onClick={handleNavClick}>
+            <FontAwesomeIcon icon={faTriangleExclamation} className="menu-icon" />
             <span>Assigned Incidents</span>
           </NavLink>
 
-          <NavLink to="incidents-history" className="dash-menu-item">
+          <NavLink to="incident-history" className="dash-menu-item" onClick={handleNavClick}>
             <FontAwesomeIcon
-              icon={faTriangleExclamation}
+              icon={faClockRotateLeft}
               className="menu-icon"
             />
-            <span>Incidents History</span>
+            <span>Incidents Logs</span>
           </NavLink>
 
           <div className="dash-group-title">Actions</div>

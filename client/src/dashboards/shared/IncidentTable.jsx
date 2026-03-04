@@ -1,9 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const IncidentTable = ({ incidents = [] }) => {
+const IncidentTable = ({ incidents = [], showAdminColumns, }) => {
   if (!incidents.length) {
     return <p className="empty-state">No incidents found</p>;
   }
+
+  const navigate=useNavigate();
 
   return (
     <div className="incident-table-wrapper">
@@ -11,12 +14,12 @@ const IncidentTable = ({ incidents = [] }) => {
         <thead>
           <tr>
             <th>Title</th>
-            <th>Reported By</th>
+            {showAdminColumns && <th>Reported By</th>}
             <th>Service</th>
             <th>Status</th>
             <th>Priority</th>
             <th>Created</th>
-            <th>Action</th>
+            {showAdminColumns && <th>Actions</th>}
           </tr>
         </thead>
 
@@ -25,7 +28,7 @@ const IncidentTable = ({ incidents = [] }) => {
             <tr key={incident._id}>
               <td className="title-cell">{incident.title}</td>
 
-              <td>{incident.reportedBy?.name || "—"}</td>
+              {showAdminColumns && <td>{incident.reportedBy?.name || "—"}</td>}
 
               <td>{incident.service?.name || "—"}</td>
 
@@ -41,13 +44,15 @@ const IncidentTable = ({ incidents = [] }) => {
                 </span>
               </td>
 
-              <td>
-                {new Date(incident.createdAt).toLocaleDateString()}
-              </td>
+              <td>{new Date(incident.createdAt).toLocaleDateString()}</td>
 
-              <td>
-                <button className="view-btn">View</button>
-              </td>
+              {showAdminColumns && (
+                <td>
+                  <button className="view-btn" onClick={()=>{
+                    navigate(`/admin/report/${incident._id}`)
+                  }}>View</button>
+                </td>
+              )}
             </tr>
           ))}
         </tbody>

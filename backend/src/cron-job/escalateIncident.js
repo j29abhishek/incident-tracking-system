@@ -4,37 +4,43 @@ const IncidentHistory = require("../models/IncidentHistory");
 const User = require("../models/User");
 
 //Running every every hour
-
 cron.schedule("0 * * * *", async () => {
   try {
-    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000); //1 h
+    const oneHourAgo = new Date(Date.now() - 60 * 60 * 1000);
+
     const incidentsToEscalate = await Incident.find({
       status: { $nin: ["resolved", "closed"] },
-      updatedAt: { $lte: oneHourAgo }, //last update older than 1 hour
+      updatedAt: { $lte: oneHourAgo },
+      escalationTriggered: { $ne: true },
     });
 
     for (const incident of incidentsToEscalate) {
-      incident.escalationTriggered = true;
+      if (incident.priority === "critical") continue;
+
+      const oldPriority = incident.priority;
 
       if (incident.priority === "medium") incident.priority = "high";
       else if (incident.priority === "high") incident.priority = "critical";
 
+      incident.escalationTriggered = true;
       await incident.save();
 
-      // Adding also it to history entry
       await IncidentHistory.create({
         incident: incident._id,
         actedBy: null,
         actionType: "PRIORITY_ESCALATED",
-        oldValue: { priority: incident.priority },
-        newValue: { priority: incident.priority, escalationTriggered: true },
+        oldValue: { priority: oldPriority },
+        newValue: {
+          priority: incident.priority,
+          escalationTriggered: true,
+        },
         comment:
           "Incident escalated automatically due to inactivity for 1 hour",
       });
-
-      console.log(`[Cron] Escalated ${incidentsToEscalate.length} incidents`);
     }
+
+    console.log(`[Cron] Escalated ${incidentsToEscalate.length} incidents`);
   } catch (error) {
-    console.error("Error running escalation cron job:", err);
+    console.error("Error running escalation cron job:", error);
   }
 });

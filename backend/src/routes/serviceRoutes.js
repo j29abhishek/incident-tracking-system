@@ -13,7 +13,7 @@ const router = express.Router();
 
 // POST /create-service → get-service
 router.post("/", verifyToken, checkRole(["admin"]), createService);
-router.get("/", verifyToken, getServices);
+router.get("/", getServices);
 router.put("/:id", verifyToken, checkRole(["admin"]), updateService);
 router.delete("/:id", verifyToken, checkRole(["admin"]), deleteService);
 

@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../css/auth.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validateSignup } from "../utils/authValidations";
 import api from "../api/axiosInstance";
 
@@ -16,8 +16,24 @@ const SignUp = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const messageTimerRef = useRef(null);
+  const navigate = useNavigate();
 
+  /* ----------------------------------
+     Auto-clear API messages
+  ---------------------------------- */
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [message]);
+
+  /* ----------------------------------
+     Input change handler
+  ---------------------------------- */
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -26,15 +42,23 @@ const SignUp = () => {
       [name]: value,
     }));
 
-    // Clear error for the field being edited
+    // clear field-specific validation error
     if (errors[name]) {
       setErrors((prev) => ({
         ...prev,
         [name]: "",
       }));
     }
+
+    // clear API error while typing
+    if (message) {
+      setMessage("");
+    }
   };
 
+  /* ----------------------------------
+     Submit handler
+  ---------------------------------- */
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -50,26 +74,22 @@ const SignUp = () => {
 
     try {
       const res = await api.post("/auth/signup", userData);
+      const { success, message: apiMessage } = res.data;
 
-      if (res.data?.success) {
-        setMessage("Your account has been created successfully.");
-
-        setUserData({
-          name: "",
-          email: "",
-          password: "",
-          confirmPassword: "",
-        });
-
-        // clear old timer if exists
-        if (messageTimerRef.current) {
-          clearTimeout(messageTimerRef.current);
-        }
-
-        messageTimerRef.current = setTimeout(() => {
-          setMessage("");
-        }, 3000);
+      if (!success) {
+        setMessage(apiMessage || "Signup failed");
+        return;
       }
+
+      // reset form after successful signup
+      setUserData({
+        name: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      navigate("/login");
     } catch (error) {
       if (error.response?.data?.message) {
         setMessage(error.response.data.message);
@@ -81,15 +101,6 @@ const SignUp = () => {
     }
   };
 
-  // Cleanup on unmount
-  useEffect(() => {
-    return () => {
-      if (messageTimerRef.current) {
-        clearTimeout(messageTimerRef.current);
-      }
-    };
-  }, []);
-
   return (
     <div className="auth-page">
       <div className="auth-card">
@@ -99,7 +110,7 @@ const SignUp = () => {
           alt="Incident Tracking System"
         />
 
-        <h2 className="auth-title">Create an Account</h2>
+        <h1 className="auth-title">Create an Account</h1>
 
         <form onSubmit={handleSubmit} noValidate>
           <div className="auth-input-group">
@@ -110,6 +121,7 @@ const SignUp = () => {
               value={userData.name}
               onChange={handleChange}
               placeholder="Enter your full name"
+              disabled={loading}
             />
             {errors.name && <p className="auth-error">{errors.name}</p>}
           </div>
@@ -122,6 +134,7 @@ const SignUp = () => {
               value={userData.email}
               onChange={handleChange}
               placeholder="Enter your email address"
+              disabled={loading}
             />
             {errors.email && <p className="auth-error">{errors.email}</p>}
           </div>
@@ -134,6 +147,7 @@ const SignUp = () => {
               value={userData.password}
               onChange={handleChange}
               placeholder="Create a secure password"
+              disabled={loading}
             />
             {errors.password && <p className="auth-error">{errors.password}</p>}
           </div>
@@ -146,6 +160,7 @@ const SignUp = () => {
               value={userData.confirmPassword}
               onChange={handleChange}
               placeholder="Re-enter your password"
+              disabled={loading}
             />
             {errors.confirmPassword && (
               <p className="auth-error">{errors.confirmPassword}</p>
@@ -154,7 +169,11 @@ const SignUp = () => {
 
           {message && <p className="auth-message">{message}</p>}
 
-          <button type="submit" className="auth-btn" disabled={loading}>
+          <button
+            type="submit"
+            className="auth-btn"
+            disabled={loading || !!message}
+          >
             {loading ? "Creating account..." : "Sign Up"}
           </button>
         </form>

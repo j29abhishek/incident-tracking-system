@@ -1,43 +1,45 @@
-// incident list for history
-
-import React, { useState,useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../api/axiosInstance";
+import "../../css/dashboard.css";
 
-const IncidentList = () => {
+const EngineerIncidentList = () => {
   const [incidents, setIncidents] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const limit = 10;
-
-  const fetchIncidents = async () => {
+  const fetchAssignedIncidents = async () => {
     const token = localStorage.getItem("token");
+    if (!token) return;
+
     try {
       setLoading(true);
       setError(null);
-      const res = await api.get(`/incidents?page=${page}&limit=${limit}`, {
+
+      const res = await api.get("/incidents/assignedto", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      setIncidents(res.data.incidents);
-      setTotalPages(res.data.totalPages);
+      setIncidents(res.data.incidents || []);
     } catch (err) {
-      setError("Failed to fetch incidents");
+      setError("Failed to fetch assigned incidents");
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchIncidents();
-  }, [page]);
+    fetchAssignedIncidents();
+  }, []);
+
+  const handleViewHistory = (incidentId) => {
+    if (!incidentId) return;
+    navigate(incidentId);
+  };
 
   if (loading) {
     return <p className="loading-state">Loading incidents...</p>;
@@ -47,16 +49,15 @@ const IncidentList = () => {
     return <p className="error-state">{error}</p>;
   }
 
-  const handleViewHistory=(incidentId)=>{
-    if(!incidentId) return ;
-    navigate(`history/${incidentId}`);
+  if (!incidents.length) {
+    return <p className="empty-state">No assigned incidents</p>;
   }
 
   return (
     <div className="incident-page">
       <div className="incident-header">
-        <h2>Incidents History</h2>
-        <p>Overview of all reported incidents, click on view history to see timeline</p>
+        <h2>Assigned Incidents</h2>
+        <p>All incidents that are assinged to you, click on view history to see timeline of an incident.</p>
       </div>
 
       <div className="incident-table-wrapper">
@@ -87,38 +88,25 @@ const IncidentList = () => {
                   </span>
                 </td>
 
-
-                <td>{new Date(incident.createdAt).toLocaleDateString()}</td>
+                <td>
+                  {new Date(incident.createdAt).toLocaleDateString()}
+                </td>
 
                 <td>
-                  <button className="view-btn" onClick={()=>{
-                    handleViewHistory(incident._id);
-                  }}>View History</button>
+                  <button
+                    className="view-btn"
+                    onClick={() => handleViewHistory(incident._id)}
+                  >
+                    View History
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage((p) => p - 1)}>
-          Prev
-        </button>
-
-        <span>
-          Page {page} of {totalPages}
-        </span>
-
-        <button
-          disabled={page === totalPages}
-          onClick={() => setPage((p) => p + 1)}
-        >
-          Next
-        </button>
-      </div>
     </div>
   );
 };
 
-export default IncidentList;
+export default EngineerIncidentList;

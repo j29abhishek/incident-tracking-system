@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   faLayerGroup,
   faUserShield,
@@ -10,7 +10,25 @@ import "../css/home.css";
 
 import FeatureCard from "../components/FeatureCard";
 import Footer from "../components/Footer";
+import { useAuth } from "../context/AuthContext";
 const Home = () => {
+  const { user, loading } = useAuth();
+  const navigate = useNavigate();
+
+  if (loading) return null; // or loader
+
+  const handleDashboardClick = () => {
+    if (!user) return;
+
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else if (user.role === "engineer") {
+      navigate("/engineer");
+    } else {
+      navigate("/user-dashboard");
+    }
+  };
+
   return (
     <div className="home-page">
       <div className="navbar">
@@ -18,9 +36,19 @@ const Home = () => {
           <img src="/itslogo.png" alt="" />
         </div>
         <div className="login">
-          <Link to="/login" className="login-link">
-            Login
-          </Link>
+          {!user ? (
+            <Link to="/login" className="login-link">
+              Login
+            </Link>
+          ) : (
+            <button
+              onClick={handleDashboardClick}
+              className="login-link"
+              style={{ cursor: "pointer" }}
+            >
+              Dashboard
+            </button>
+          )}
         </div>
       </div>
 

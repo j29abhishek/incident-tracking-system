@@ -16,7 +16,7 @@ const checkRole = (allowedRoles = []) => {
       });
     }
 
-    console.log("Passed authorization middleware...")
+    // console.log("Passed authorization middleware...")
     next();
   };
 };

@@ -8,6 +8,9 @@ const reportIncident = async (req, res) => {
     const { title, description, service } = req.body;
     const reporterId = req.user.id;
 
+    if (!title || !description) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
     // Create the incident
     const newIncident = await Incident.create({
       title,
@@ -16,8 +19,13 @@ const reportIncident = async (req, res) => {
       reportedBy: reporterId,
     });
 
+    //Emit event to all admins
+
+    const io = req.app.get("io");
+    io.emit("new-incident", newIncident);
+
     //Create history record
-    // Create history record
+
     const incidentHistory = await IncidentHistory.create({
       incident: newIncident._id,
       actionType: "CREATED",
@@ -32,12 +40,10 @@ const reportIncident = async (req, res) => {
       },
     });
 
-    console.log("Loggin history: ", incidentHistory);
-
     res.status(201).json({
       message: "Incident reported successfully",
       incident: newIncident,
-      history: incidentHistory,
+      // history: incidentHistory,
     });
   } catch (error) {
     console.error("Error reporting incident:", error);
@@ -89,6 +95,14 @@ const assignIncident = async (req, res) => {
         status: incident.status,
       },
     });
+
+    const io = req.app.get("io");
+
+    // Notify assigned engineer only
+    if (assignedTo) io.emit(`assigned-incident-${assignedTo}`, incident);
+
+    // Optionally, notify all admins about update
+    // io.emit("update-incident", incident);
 
     res.json({
       message: "Incident assigned successfully",
@@ -154,11 +168,11 @@ const engineerAction = async (req, res) => {
 
 // GET /api/incidents/:id/history
 
-
 const getIncidentHistory = async (req, res) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status(400).json({ message: "Incident ID is required" });
+    if (!id)
+      return res.status(400).json({ message: "Incident ID is required" });
 
     // Fetch history
     const history = await IncidentHistory.find({ incident: id })
@@ -212,7 +226,10 @@ const getIncidentHistory = async (req, res) => {
     res.json(formatted);
   } catch (error) {
     console.error("Error fetching incident history:", error);
-    res.status(500).json({ message: "Failed to fetch incident history", error: error.message });
+    res.status(500).json({
+      message: "Failed to fetch incident history",
+      error: error.message,
+    });
   }
 };
 
@@ -260,6 +277,32 @@ const getUserIncidents = async (req, res) => {
       .populate("service", "name description");
 
     if (!incidents.length) {
+      return res.status(200).json({
+        message: "User incidents fetched successfully",
+        incidents: [],
+      });
+    }
+
+    res.status(200).json({
+      message: "User incidents fetched successfully",
+      incidents,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to fetch user incidents" });
+  }
+};
+
+const getIncidentById = async (req, res) => {
+  try {
+    const incidentId = req.params.id;
+    const incidents = await Incident.find({ _id: incidentId })
+      .lean()
+      .populate("assignedTo", "name role")
+      .populate("reportedBy", "name _id role")
+      .populate("service", "name description");
+
+    if (!incidents.length) {
       return res.status(404).json({ message: "No incidents found for user" });
     }
 
@@ -273,6 +316,34 @@ const getUserIncidents = async (req, res) => {
   }
 };
 
+const getAssignedIncidents = async (req, res) => {
+  try {
+    const engId = req.user.id;
+    // console.log(engId);
+    // Fetch incidents assigned to this engineer
+    const incidents = await Incident.find({ assignedTo: engId })
+      .populate("assignedTo", "name role") // Engineer info
+      .populate("reportedBy", "name _id role") // User info
+      .populate("service", "name description") // Service info
+      .lean(); // Return plain JS objects
+
+    if (!incidents || incidents.length === 0) {
+      return res.status(200).json({
+        message: "Incidents fetched successfully",
+        incidents: [],
+      });
+    }
+
+    res.status(200).json({
+      message: "Assigned incidents fetched successfully",
+      incidents,
+    });
+  } catch (err) {
+    console.error("Error fetching assigned incidents:", err);
+    res.status(500).json({ message: "Failed to fetch assigned incidents" });
+  }
+};
+
 module.exports = {
   reportIncident,
   assignIncident,
@@ -280,4 +351,6 @@ module.exports = {
   getIncidentHistory,
   getIncidents,
   getUserIncidents,
+  getIncidentById,
+  getAssignedIncidents,
 };

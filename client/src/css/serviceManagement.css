@@ -26,6 +26,7 @@
 /* Table Wrapper */
 .service-table-wrapper {
   margin-top: 20px;
+  width:100%;
   background: #ffffff;
   border-radius: 8px;
   overflow-x: auto;
@@ -35,10 +36,11 @@
 
 /* Table Styling */
 .service-table {
-  width: 100%;
+  /* width: 100%; */
   border-collapse: collapse;
   font-size: 14px;
   min-width: 600px;
+  white-space: nowrap;
 }
 
 .service-table thead th {
@@ -48,6 +50,7 @@
   color: #6b7280;
   background-color: #fafafa;
   border-bottom: 1px solid #eef0f3;
+  white-space: nowrap;
 }
 
 .service-table tbody td {
@@ -55,6 +58,7 @@
   color: #374151;
   border-bottom: 1px solid #f0f2f5;
   vertical-align: middle;
+  white-space: nowrap;
 }
 
 .service-table tbody tr:hover {
@@ -208,5 +212,17 @@
   .icon-btn {
     font-size: 14px;
     padding: 4px 6px;
+  }
+
+  .service-management-page{
+    padding:20px 5px;
+  }
+
+  .service-form-page{
+    padding:0px;
+  }
+
+  .service-form-card{
+    width:100%;
   }
 }

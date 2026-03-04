@@ -1,0 +1,194 @@
+/* Wrapper aligns form inside dashboard right content */
+.incident-form-wrapper {
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+/* Form container */
+.incident-form {
+  width: 80%;
+  /* background-color: white; */
+}
+
+/* Input group layout */
+.inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* Individual input block */
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Labels */
+.input label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  /* margin-bottom: 6px; */
+}
+
+/* Shared styles for input, textarea, select */
+.input input,
+.input textarea,
+.input select {
+  border: none;
+  border-bottom: 1px solid #d0d5dd;
+  padding: 10px 4px;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  color: #101828;
+  resize: none;
+  transition: border-color 0.2s ease;
+}
+
+/* Placeholder color */
+.input input::placeholder,
+.input textarea::placeholder {
+  color: #98a2b3;
+}
+
+/* Focus state */
+.input input:focus,
+.input textarea:focus,
+.input select:focus {
+  border-bottom-color: #2563eb;
+  /* subtle blue */
+}
+
+/* Select dropdown arrow fix */
+.input select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2398A2B3' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 4px center;
+  cursor: pointer;
+}
+
+/* Textarea spacing */
+.input textarea {
+  line-height: 1.5;
+}
+
+/* Submit button */
+.incident-submit-btn {
+  margin-top: 32px;
+  align-self: flex-start;
+  padding: 10px 30px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #2563eb;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.incident-submit-btn:hover {
+  background-color: #1e4fd8;
+}
+
+/* incident management form  */
+.incident-form-container {
+  width: 100%;
+  margin: 20px auto;
+  padding: 25px;
+  background: #fff;
+  /* border-radius: 8px; */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+.incident-form-title {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+/* Grid container for all fields */
+.incident-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+/* Field styling */
+.incident-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.incident-field label {
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #555;
+}
+
+.incident-field input,
+.incident-field select,
+.incident-field textarea {
+  border: none;
+  border-bottom: 1px solid #d0d5dd;
+  padding: 10px 4px;
+  font-size: 14px;
+  outline: none;
+  background: transparent;
+  color: #101828;
+  resize: none;
+  transition: border-color 0.2s ease;
+}
+
+.incident-field input:disabled,
+.incident-field textarea:disabled {
+  background-color: #f3f3f3ef;
+  color: #777;
+}
+
+/* .incident-submit-btn {
+  display: block;
+  padding: 10px 2rem;
+  background-color: #4caf50;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.incident-submit-btn:hover {
+  background-color: #45a049;
+} */
+
+/* Responsive: single column below 750px */
+@media (max-width: 750px) {
+  .incident-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .incident-form-container{
+    padding:15px;
+  }
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .incident-form-wrapper {
+    padding: 16px 14px;
+  }
+
+  .incident-submit-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

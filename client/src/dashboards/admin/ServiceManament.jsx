@@ -57,6 +57,7 @@ const ServiceManagement = () => {
       ) : services.length === 0 ? (
         <p>No services available</p>
       ) : (
+        <div className="incident-table-wrapper"> 
         <table className="service-table">
           <thead>
             <tr>
@@ -97,6 +98,7 @@ const ServiceManagement = () => {
             ))}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   );
