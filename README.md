@@ -6,12 +6,12 @@ This is a **full-stack Incident Management System** with role-based access (Admi
 
 - `backend/` – Node.js + Express API, MongoDB models, controllers, routes.
 - `frontend/` – React.js frontend.
-- `docs/` – Postman collection for API testing.
+- `postman_collection/` – Postman collection for API testing.
 - `.gitignore` – Files to ignore in Git.
 
 ## API Documentation
 
-You can import the Postman collection [`Incident Tracking System API.postman_collection`](./docs/Incident%20Tracking%20System%20API.postman_collection) into Postman to test all APIs.
+You can import the Postman collection [`Incident Tracking System API.postman_collection`](./postman_collection/Incident%20Tracking%20System%20API.postman_collection) into Postman to test all APIs.
 
 **Steps:**
 1. Clone the repository.
