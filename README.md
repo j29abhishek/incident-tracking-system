@@ -15,7 +15,7 @@ You can import the Postman collection [`Incident Tracking System API.postman_col
 
 **Steps:**
 1. Clone the repository.
-2. Open Postman → File → Import → Choose the JSON file from `docs/`.
+2. Open Postman → File → Import → Choose the JSON file from `postman_collection/`.
 3. The collection will appear with all endpoints ready to use.
 
 ## Getting Started
