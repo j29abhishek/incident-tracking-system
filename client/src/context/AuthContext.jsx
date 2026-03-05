@@ -7,24 +7,21 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const token = localStorage.getItem("token");
-
   const loadUser = async () => {
+    const token = localStorage.getItem("token");
     if (!token) {
+      setUser(null);
       setLoading(false);
       return;
     }
 
     try {
       const res = await api.get("/auth/me", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-
-      setUser(res.data.user);
+      setUser(res.data.user || null);
     } catch (err) {
-      console.log("Auth load failed");
+      console.log("Auth load failed", err);
       localStorage.removeItem("token");
       setUser(null);
     } finally {
@@ -34,6 +31,13 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     loadUser();
+
+    // Listen for token changes (multi-tab login/logout)
+    const handleStorage = (e) => {
+      if (e.key === "token") loadUser();
+    };
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
   }, []);
 
   return (

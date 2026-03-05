@@ -439,6 +439,32 @@
     gap: 24px;
   }
 
+  .feature-card-title{
+    display: flex;
+    align-items: center;
+    gap:10px;
+  }
+
+  .feature-card{
+    padding:28px 5px;
+  }
+
+  .feature-icon{
+     font-size: 22px;
+  margin-bottom: 16px;
+  background: linear-gradient(90deg, #2563eb, #4f46e5, #9333ea);
+  color: #ffffff;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  }
+
+  .feature-card-title h3{
+    font-size: 20px;
+  }
   .service-introduction h2{
     font-size: 28px;
   }
@@ -446,7 +472,7 @@
     background: #8a2ce8;
     color: #ffffff;
     /* border: none; */
-    padding: 6px 15px;
+    /* padding: 9px 15px; */
     font-size: 14px;
   }
 
