@@ -28,9 +28,9 @@ const IncidentTable = ({ incidents = [], showAdminColumns, }) => {
             <tr key={incident._id}>
               <td className="title-cell">{incident.title}</td>
 
-              {showAdminColumns && <td>{incident.reportedBy?.name || "—"}</td>}
+              {showAdminColumns && <td>{incident.reportedBy.name || "—"}</td>}
 
-              <td>{incident.service?.name || "—"}</td>
+              <td>{incident.service.name || "—"}</td>
 
               <td>
                 <span className={`status ${incident.status}`}>

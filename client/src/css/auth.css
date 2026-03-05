@@ -141,3 +141,9 @@ p.auth-message {
 .unauth-home-link:hover {
   text-decoration: underline;
 }
+
+@media (min-width:600px){
+  .auth-page{
+    align-items: center;
+  }
+}
